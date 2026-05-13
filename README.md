@@ -12,3 +12,9 @@ SELECT
     SUM(sales) OVER(ORDER BY day) AS acumulado
 FROM sales;
 ```
+y el resultado:
+| día | ventas | acumulado |
+| --- | ------ | --------- |
+| 1   | 100    | 100       |
+| 2   | 200    | 300       |
+| 3   | 50     | 350       |
