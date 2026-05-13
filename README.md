@@ -3,3 +3,12 @@
 La **'window'**, de color verde, se puede decir que es como queremos ver los datos
 
 La **'function'**, de color azul, es la funcion que aplicas a la window, pues en este caso, nos indica el numero de la columna
+
+Más ejemplos:
+´´´sql
+SELECT
+    day,
+    sales,
+    SUM(sales) OVER(ORDER BY day) AS acumulado
+FROM sales;
+´´´
