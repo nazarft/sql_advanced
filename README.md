@@ -1,10 +1,41 @@
-<img width="1362" height="622" alt="image" src="https://github.com/user-attachments/assets/c5d43dd2-6326-41a8-a468-f60d4fba1c21" />
+## Ventanas SQL (Window Functions)
 
-La **'window'**, de color verde, se puede decir que es como queremos ver los datos
+### Conceptos Clave
 
-La **'function'**, de color azul, es la funcion que aplicas a la window, pues en este caso, nos indica el numero de la columna
+```
+┌─────────────────────────────────────────────────────────┐
+│                    WINDOW FUNCTION                       │
+├─────────────────────────────────────────────────────────┤
+│                                                          │
+│  SELECT column, AGGREGATE(column) OVER( ┌────────┐ )   │
+│                                         │ WINDOW │      │
+│  ┌──────────────────────────────┐       └────────┘      │
+│  │ PARTITION BY column          │   ← Agrupa filas      │
+│  │ ORDER BY column              │   ← Define orden      │
+│  │ ROWS BETWEEN ... AND ...     │   ← Define rango      │
+│  └──────────────────────────────┘                        │
+│           ▲                                              │
+│           │                                              │
+│      Define cómo                                         │
+│     procesamos los datos                                 │
+│                                                          │
+└─────────────────────────────────────────────────────────┘
+```
 
-Más ejemplos:
+---
+
+### 📊 Componentes Principales
+
+| Componente | Color | Descripción |
+|-----------|-------|------------|
+| **Window** | 🟢 Verde | Define **cómo vemos los datos** (partición, orden, rango) |
+| **Función** | 🔵 Azul | **Qué aplicamos** a la ventana (SUM, ROW_NUMBER, AVG, etc.) |
+
+---
+
+### 💡 Ejemplo Práctico
+
+**Consulta SQL:**
 ```sql
 SELECT
     day,
@@ -12,9 +43,39 @@ SELECT
     SUM(sales) OVER(ORDER BY day) AS acumulado
 FROM sales;
 ```
-y el resultado:
-| día | ventas | acumulado |
-| --- | ------ | --------- |
-| 1   | 100    | 100       |
-| 2   | 200    | 300       |
-| 3   | 50     | 350       |
+
+**Resultado:**
+
+| día | ventas | acumulado | Explicación |
+|-----|--------|-----------|-------------|
+| 1   | 100    | 100       | suma: 100 |
+| 2   | 200    | 300       | suma: 100+200 |
+| 3   | 50     | 350       | suma: 100+200+50 |
+
+---
+
+### 🎯 Visualización del Proceso
+
+```
+Datos originales:
+┌─────┬─────────┐
+│ día │ ventas  │
+├─────┼─────────┤
+│  1  │   100   │ ─┐
+│  2  │   200   │  ├─ WINDOW (ORDER BY day)
+│  3  │    50   │ ─┘
+└─────┴─────────┘
+          │
+          ▼
+   SUM(sales) OVER
+    (ORDER BY day)
+          │
+          ▼
+┌─────┬─────────┬─────────────┐
+│ día │ ventas  │ acumulado   │
+├─────┼─────────┼─────────────┤
+│  1  │   100   │     100     │
+│  2  │   200   │     300     │
+│  3  │    50   │     350     │
+└─────┴─────────┴─────────────┘
+```
