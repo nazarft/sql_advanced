@@ -32,6 +32,8 @@
 | **Función** | 🔵 Azul | **Qué aplicamos** a la ventana (SUM, ROW_NUMBER, AVG, etc.) |
 
 ---
+<img width="1420" height="666" alt="image" src="https://github.com/user-attachments/assets/e770f8c7-c94e-4c0f-8ff5-b0d35f183adf" />
+
 
 ### 💡 Ejemplo Práctico
 
